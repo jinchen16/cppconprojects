@@ -13,5 +13,33 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\FinalProject">
+      <UniqueIdentifier>{861c2bdd-c034-4576-a7cb-3fee50d40bb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FinalProject">
+      <UniqueIdentifier>{4cc3e899-05c3-4f28-985a-3596bd6080b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Hockey">
+      <UniqueIdentifier>{fd9797e7-eefc-4497-a103-b7d49b1f3f9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Hockey">
+      <UniqueIdentifier>{e7ca3186-b23a-4566-9727-fab8bab9f0e0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CalculatorMain.cpp">
+      <Filter>Source Files\FinalProject</Filter>
+    </ClCompile>
+    <ClCompile Include="HockeyMain.cpp">
+      <Filter>Source Files\Hockey</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CalculatorUtils.h">
+      <Filter>Header Files\FinalProject</Filter>
+    </ClInclude>
+    <ClInclude Include="HockeyUtils.h">
+      <Filter>Header Files\Hockey</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
