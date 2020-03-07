@@ -1,11 +1,14 @@
 #pragma once
 #include<iostream>
 #include<string>
+#include<Windows.h>
 
 using namespace std;
 
-namespace final
+namespace final_calculator
 {
+	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE); // Using the SetConsoleTextAttribute()
+
 	void DisplayTitle(string title)
 	{
 		string m_title = title;
@@ -37,24 +40,35 @@ namespace final
 
 	void DisplayMenu()
 	{
-		cout << "1 - Addition\n2 - Division\n";
-		cout << "3 - Substraction\n4 - Multiplication\n";
+		SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cout << "1 - Addition\n";
+		
+		SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		cout << "2 - Division\n";
+		
+		SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		cout << "3 - Substraction\n";
+		
+		SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
+		cout << "4 - Multiplication\n";
+
+		SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 		cout << "5 - Quit\n\n";
 	}
 
-	short ReadChoice()
+	short ReadChoice(short minRange, short maxRange)
 	{
-		DisplayMenu();
+		SetConsoleTextAttribute(console, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 		short choice;
 		do {
-			cout << "Enter your choice (1-5): ";
+			cout << "Enter your choice (" << minRange << "-" << maxRange << "): ";
 			cin >> choice;
-		} while (choice < 1 || choice > 5);
+		} while (choice < minRange || choice > maxRange );
 		return choice;
 	}
 
 	short ReadOperationTimes(string operation, short min, short max)
-	{
+	{		
 		short ot;
 		do {
 			cout << "Enter the number of values to " << operation << ": ";
@@ -91,29 +105,17 @@ namespace final
 
 	void DisplayResult(string text, float value)
 	{
+		SetConsoleTextAttribute(console, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_INTENSITY);
 		cout << text << value << endl;
 	}
 
 	char ConfirmSelection(string text)
 	{
+		SetConsoleTextAttribute(console, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 		char sel;
 		cout << text;
 		cin >> sel;
 		return sel;
-	}
-
-	void ProcessSum()
-	{
-		char selection;
-		short timesOp;
-		do {
-			system("cls");
-			DisplayTitle("calculator");
-			DisplaySubtitle("addition");
-			timesOp = ReadOperationTimes("add", 2, 100);
-			DisplayResult("The result is ", CalculateAddition(timesOp));
-			selection = ConfirmSelection("Would you like to do another addition? (y/n)");
-		} while (toupper(selection) == 'Y');
 	}
 
 	float ValidateNumber(float value)
@@ -129,39 +131,9 @@ namespace final
 		return number1 / number2;
 	}
 
-	void ProcessDivision()
-	{
-		float number1, number2;
-		char selection;
-		do {
-			system("cls");
-			DisplayTitle("calculator");
-			DisplaySubtitle("division");
-			number1 = ReadNumber("Enter value to divide: ");
-			number2 = ValidateNumber(ReadNumber("Enter the divider: "));
-			DisplayResult("The result of the division is: ", CalculateDivision(number1, number2));
-			selection = ConfirmSelection("Would you like to do another division? (y/n): ");
-		} while (toupper(selection) == 'Y');
-	}
-
 	float CalculateSubstraction(float number1, float number2)
 	{
 		return number1 - number2;
-	}
-
-	void ProcessSubstraction()
-	{
-		float number1, number2;
-		char selection;
-		do {
-			system("cls");
-			DisplayTitle("calculator");
-			DisplaySubtitle("substraction");
-			number1 = ReadNumber("Enter the value to substract: ");
-			number2 = ReadNumber("Enter the sustracter: ");
-			DisplayResult("The result of the division is: ", CalculateSubstraction(number1, number2));
-			selection = ConfirmSelection("Would you like to do another substraction? (y/n): ");
-		} while (toupper(selection) == 'Y');
 	}
 
 	float CalculateMultiplication(short times)
@@ -174,14 +146,70 @@ namespace final
 		return res;
 	}
 
+	void ProcessSum()
+	{
+		char selection;
+		short timesOp;
+		do {
+			system("cls");
+			SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_INTENSITY);
+			DisplayTitle("calculator");
+			SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			DisplaySubtitle("addition");
+			SetConsoleTextAttribute(console, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			timesOp = ReadOperationTimes("add", 2, 100);			
+			DisplayResult("The result is ", CalculateAddition(timesOp));			
+			selection = ConfirmSelection("Would you like to do another addition? (y/n)");
+		} while (toupper(selection) == 'Y');
+	}
+
+	void ProcessDivision()
+	{
+		float number1, number2;
+		char selection;
+		do {
+			system("cls");
+			SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_INTENSITY);
+			DisplayTitle("calculator");
+			SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			DisplaySubtitle("division");
+			SetConsoleTextAttribute(console, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			number1 = ReadNumber("Enter value to divide: ");			
+			number2 = ValidateNumber(ReadNumber("Enter the divider: "));			
+			DisplayResult("The result of the division is: ", CalculateDivision(number1, number2));			
+			selection = ConfirmSelection("Would you like to do another division? (y/n): ");
+		} while (toupper(selection) == 'Y');
+	}
+
+	void ProcessSubstraction()
+	{
+		float number1, number2;
+		char selection;
+		do {
+			system("cls");
+			SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_INTENSITY);
+			DisplayTitle("calculator");
+			SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			DisplaySubtitle("substraction");
+			SetConsoleTextAttribute(console, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			number1 = ReadNumber("Enter the value to substract: ");
+			number2 = ReadNumber("Enter the sustracter: ");
+			DisplayResult("The result of the division is: ", CalculateSubstraction(number1, number2));
+			selection = ConfirmSelection("Would you like to do another substraction? (y/n): ");
+		} while (toupper(selection) == 'Y');
+	}
+
 	void ProcessMultiplation()
 	{
 		short timesOp;
 		char selection;
 		do {
 			system("cls");
+			SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_INTENSITY);
 			DisplayTitle("calculator");
+			SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
 			DisplaySubtitle("multiplication");
+			SetConsoleTextAttribute(console, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 			timesOp = ReadOperationTimes("multiply ", 2, 100);
 			DisplayResult("The result of the multiplication is ", CalculateMultiplication(timesOp));
 			selection = ConfirmSelection("Would you like to do another multiplication? (y/n): ");
@@ -195,10 +223,13 @@ namespace final
 		//Starting operations
 		do {
 			system("cls");
+			SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_INTENSITY);
 			DisplayTitle("calculator");
+			SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 			DisplayName();
-			choice = ReadChoice();
-			/*switch (choice) {
+			DisplayMenu();
+			choice = ReadChoice(1, 5);
+			switch (choice) {
 			case 1:
 				ProcessSum();
 				break;
@@ -213,24 +244,6 @@ namespace final
 				break;
 			case 5:
 				break;
-			}*/
-			if (choice >= 1 && choice < 5)
-			{
-				switch (choice)
-				{
-				case 1:
-					ProcessSum();
-					break;
-				case 2:
-					ProcessDivision();
-					break;
-				case 3:
-					ProcessSubstraction();
-					break;
-				case 4:
-					ProcessMultiplation();
-					break;
-				}
 			}
 		} while (choice != 5);
 	}
